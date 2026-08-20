@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gurgaon or Chennai? — Help Me Decide</title>
+<meta name="description" content="Help me decide between Gurgaon and Chennai.">
+<style>
+:root{
+  --bg:#f7f7fb;--card:#fff;--text:#171923;--muted:#686b78;--line:#e7e7ef;
+  --g:#5969f2;--c:#ef7b54;--accent:#7a5cff;--dark:#20212d;
+  --shadow:0 18px 55px rgba(26,29,52,.09);--r:24px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;color:var(--text);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  line-height:1.55;background:
+  radial-gradient(circle at 8% 0%,rgba(89,105,242,.13),transparent 28%),
+  radial-gradient(circle at 92% 7%,rgba(239,123,84,.13),transparent 30%),var(--bg)
+}
+button,input,textarea{font:inherit}
+button{cursor:pointer}
+.wrap{width:min(1120px,calc(100% - 32px));margin:auto}
+.hero{text-align:center;padding:70px 0 44px}
+.badge{display:inline-block;padding:7px 13px;border:1px solid var(--line);border-radius:999px;background:#ffffffb8;color:var(--muted);font-size:13px;font-weight:800}
+h1{font-size:clamp(42px,7vw,76px);line-height:.98;letter-spacing:-4px;margin:20px auto 18px;max-width:900px}
+.gradient{background:linear-gradient(100deg,var(--g),var(--accent),var(--c));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero>div>p{max-width:720px;margin:auto;color:var(--muted);font-size:18px}
+.name-card{max-width:620px;margin:32px auto 0;padding:25px;background:#fffffff0;border:1px solid #fff;border-radius:var(--r);box-shadow:var(--shadow)}
+label{display:block;text-align:left;font-weight:800;margin-bottom:8px}
+input,textarea{width:100%;padding:14px 16px;border:1px solid var(--line);border-radius:14px;background:#fff;outline:none;transition:.2s}
+input:focus,textarea:focus{border-color:var(--accent);box-shadow:0 0 0 4px #7a5cff14}
+textarea{min-height:135px;resize:vertical}
+.primary{width:100%;margin-top:14px;padding:14px 18px;border:0;border-radius:14px;background:linear-gradient(100deg,var(--g),var(--accent));color:#fff;font-weight:850;box-shadow:0 12px 28px #5969f238}
+.special-note{margin:13px 0 0;color:var(--muted);font-size:13px}
+.hidden{display:none!important}
+section{padding:42px 0}
+.section-title{text-align:center;margin-bottom:25px}
+.section-title h2{margin:0 0 7px;font-size:34px;letter-spacing:-1px}
+.section-title p{margin:0;color:var(--muted)}
+.cities{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.city{padding:26px;background:#fffffff0;border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow)}
+.gurgaon{border-top:5px solid var(--g)}.chennai{border-top:5px solid var(--c)}
+.city-head{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:18px}
+.city h3{margin:0;font-size:27px}
+.pill{font-size:12px;font-weight:800;padding:6px 9px;border-radius:999px;background:#f0f1f6;color:var(--muted)}
+.list-title{font-size:13px;font-weight:900;margin:20px 0 9px;text-transform:uppercase;letter-spacing:.7px}
+ul{list-style:none;padding:0;margin:0}
+li{padding:11px 0;border-bottom:1px solid var(--line);display:flex;gap:10px;align-items:flex-start}
+li:last-child{border-bottom:0}
+.locked{margin-top:13px;padding:15px;border:1px dashed #c9cad6;border-radius:15px;background:#fafafd;color:var(--muted)}
+.unlocked{margin-top:13px;padding:15px;border-radius:15px;background:#7a5cff0d;border:1px solid #7a5cff2b}
+.question-grid{display:grid;gap:18px}
+.question{padding:22px;background:#fffffff0;border:1px solid var(--line);border-radius:20px;box-shadow:0 10px 30px #181c370b}
+.question h3{margin:0 0 14px;font-size:18px}
+.scale{display:flex;gap:8px}
+.scale button{flex:1;padding:10px 4px;border:1px solid var(--line);background:#fff;border-radius:12px;font-weight:800;color:var(--muted)}
+.scale button.selected{background:var(--text);color:#fff;border-color:var(--text)}
+.hint{text-align:center;color:var(--muted);font-size:12px;margin-top:7px}
+.choice-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.choice{border:1px solid var(--line);background:#fff;padding:13px 9px;border-radius:14px;font-weight:750}
+.choice.selected{border-color:var(--accent);background:#7a5cff0d;color:var(--accent)}
+.rank-list{display:grid;gap:10px}
+.rank-item{display:flex;align-items:center;justify-content:space-between;gap:10px;border:1px solid var(--line);background:#fff;border-radius:14px;padding:12px 14px}
+.rank-item button{width:34px;height:34px;border:1px solid var(--line);border-radius:9px;background:#fff}
+.rank-num{width:28px;height:28px;display:grid;place-items:center;border-radius:50%;background:#f0f1f6;font-weight:900}
+.vote-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.vote{min-height:110px;border:1px solid var(--line);background:#fff;border-radius:18px;padding:20px;font-weight:900;font-size:18px;transition:.2s}
+.vote:hover{transform:translateY(-3px);box-shadow:0 14px 30px #181c370d}
+.vote.selected{border:2px solid var(--accent);background:#7a5cff0d}
+.result{margin-top:26px;padding:30px;border-radius:var(--r);background:linear-gradient(135deg,#1c1d28,#303140);color:#fff;box-shadow:var(--shadow)}
+.result h2{margin:0 0 7px;font-size:32px}
+.result p{color:#d9dae2}
+.bars{margin-top:24px;display:grid;gap:17px}
+.bar-row{display:grid;grid-template-columns:90px 1fr 55px;gap:10px;align-items:center}
+.bar{height:12px;border-radius:99px;background:#4a4b58;overflow:hidden}
+.fill{height:100%;width:0;border-radius:99px;transition:1s ease}
+.gfill{background:#7f8cff}.cfill{background:#ff9a77}
+.privacy{text-align:center;color:#cfd0d8;font-size:12px;margin-top:20px}
+.success{margin-top:20px;padding:15px;border-radius:14px;background:#ffffff0d;border:1px solid #ffffff18;color:#e6e7eb}
+.footer{text-align:center;color:var(--muted);padding:42px 0 70px;font-size:13px}
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,120px);background:#171923;color:#fff;padding:12px 17px;border-radius:999px;opacity:0;transition:.3s;z-index:50;box-shadow:0 12px 30px #0003}
+.toast.show{transform:translate(-50%,0);opacity:1}
+@media(max-width:760px){
+  .hero{padding-top:48px}h1{letter-spacing:-2.5px}.cities,.vote-grid{grid-template-columns:1fr}
+  .choice-grid{grid-template-columns:1fr 1fr}.city{padding:20px}
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="badge">I need some honest opinions</div>
+    <h1>Gurgaon or <span class="gradient">Chennai?</span><br>I’m confused.</h1>
+    <p>
+      I asked for a move to Gurgaon and got the approval. But now that the decision is real,
+      I’m not sure whether I should actually go. So I made this little page to get some honest opinions.
+    </p>
+
+    <div class="name-card">
+      <label for="name">What's your name?</label>
+      <input id="name" autocomplete="name" placeholder="Your name">
+      <div class="special-note">You're special. That's why you got this page.</div>
+      <button class="primary" onclick="start()">Let's see what you think →</button>
+      <div id="unlockMsg" class="special-note"></div>
+    </div>
+  </div>
+</header>
+
+<main id="main" class="hidden">
+<section>
+<div class="wrap">
+  <div class="section-title">
+    <h2>First, see the whole picture</h2>
+    <p id="hello"></p>
+  </div>
+
+  <div class="cities">
+    <article class="city gurgaon">
+      <div class="city-head"><h3>Gurgaon</h3><span class="pill">Family • Comfort • Familiarity</span></div>
+      <div class="list-title">Pros</div>
+      <ul>
+        <li><span>✓</span><span>Near to hometown and stay with family</span></li>
+        <li><span>✓</span><span>No language barrier</span></li>
+        <li><span>✓</span><span>School friends are there for help and support</span></li>
+        <li><span>✓</span><span>Can go on bike trips to several beautiful places like Ladakh, Himachal, Manali, etc.</span></li>
+        <li><span>✓</span><span>Will stay in a good apartment and don’t have to do all the housework alone.</span></li>
+      </ul>
+
+      <div class="list-title">Cons</div>
+      <ul>
+        <li><span>×</span><span>Travel around 1–1.5 hours each way to come to office</span></li>
+        <li><span>×</span><span>Friends are there, focus on my self development won’t be that much.</span></li>
+        <li><span>×</span><span>Bike number plate can cause issue while riding daily.</span></li>
+      </ul>
+
+      <div id="lockedPersonal" class="locked">
+        <strong>2 personal/work points are hidden.</strong><br>
+        You are not allowed to view them.
+      </div>
+
+      <div id="unlockedPersonal" class="unlocked hidden">
+        <strong>You have access to the two additional points.</strong>
+        <ul>
+          <li><span>×</span><span>I am a person who lives peacefully and in a peaceful environment, but people behave rudely there.</span></li>
+          <li><span>×</span><span>Team members mostly work in isolation; nobody is ready to compromise.</span></li>
+        </ul>
+      </div>
+
+      <ul style="margin-top:10px">
+        <li><span>×</span><span>If I need any help regarding my work then I have to completely rely on calls.</span></li>
+      </ul>
+    </article>
+
+    <article class="city chennai">
+      <div class="city-head"><h3>Chennai</h3><span class="pill">Growth • Independence • Team</span></div>
+      <div class="list-title">Pros</div>
+      <ul>
+        <li><span>✓</span><span>Focusing on gym and personal development seriously without distractions.</span></li>
+        <li><span>✓</span><span>Good team members and helpful.</span></li>
+        <li><span>✓</span><span>Good bonding with team members.</span></li>
+        <li><span>✓</span><span>Living independently (comes with a con).</span></li>
+        <li><span>✓</span><span>Have time for learning new technology and skills.</span></li>
+      </ul>
+      <div class="list-title">Cons</div>
+      <ul>
+        <li><span>×</span><span>Language barrier outside office.</span></li>
+        <li><span>×</span><span>Living alone, sometimes feels very lonely and low.</span></li>
+        <li><span>×</span><span>Taking care of everything, sometimes feels too heavy to handle.</span></li>
+        <li><span>×</span><span>The place I am living is not at all good.</span></li>
+        <li><span>×</span><span>No close friends.</span></li>
+        <li><span>×</span><span>Some personal reasons.</span></li>
+      </ul>
+    </article>
+  </div>
+</div>
+</section>
+
+<section>
+<div class="wrap">
+  <div class="section-title">
+    <h2>Now help me think it through</h2>
+    <p>There are no right answers. I genuinely want your perspective.</p>
+  </div>
+
+  <div class="question-grid">
+    <div class="question">
+      <h3>1. How important is living with family?</h3>
+      <div class="scale" data-key="family"><button>1</button><button>2</button><button>3</button><button>4</button><button>5</button></div>
+      <div class="hint">1 = not important · 5 = extremely important</div>
+    </div>
+
+    <div class="question">
+      <h3>2. How important is personal / career growth?</h3>
+      <div class="scale" data-key="growth"><button>1</button><button>2</button><button>3</button><button>4</button><button>5</button></div>
+      <div class="hint">1 = not important · 5 = extremely important</div>
+    </div>
+
+    <div class="question">
+      <h3>3. How important is having a peaceful environment?</h3>
+      <div class="scale" data-key="peace"><button>1</button><button>2</button><button>3</button><button>4</button><button>5</button></div>
+      <div class="hint">1 = not important · 5 = extremely important</div>
+    </div>
+
+    <div class="question">
+      <h3>4. Which matters more for this decision?</h3>
+      <div class="choice-grid" id="priority">
+        <button class="choice">Personal growth</button>
+        <button class="choice">Family & comfort</button>
+        <button class="choice">Career</button>
+        <button class="choice">Social life</button>
+        <button class="choice">Peace of mind</button>
+      </div>
+    </div>
+
+    <div class="question">
+      <h3>5. Put these priorities in the order you think I should consider them</h3>
+      <div class="rank-list" id="rankList"></div>
+    </div>
+
+    <div class="question">
+      <h3>6. If you were in my situation, what would you choose?</h3>
+      <div class="vote-grid">
+        <button class="vote" data-vote="Gurgaon">Gurgaon</button>
+        <button class="vote" data-vote="Chennai">Chennai</button>
+        <button class="vote" data-vote="Confused">I’m confused too</button>
+      </div>
+    </div>
+
+    <div class="question">
+      <h3>7. Why? Be honest. What would you tell me if we were sitting together?</h3>
+      <textarea id="advice" placeholder="Write your honest advice here..."></textarea>
+    </div>
+  </div>
+
+  <button class="primary" onclick="calculate()">Show me your recommendation →</button>
+
+  <div id="result" class="result hidden">
+    <h2 id="resultTitle"></h2>
+    <p id="resultText"></p>
+    <div class="bars">
+      <div class="bar-row"><strong>Gurgaon</strong><div class="bar"><div id="gFill" class="fill gfill"></div></div><strong id="gPct">0%</strong></div>
+      <div class="bar-row"><strong>Chennai</strong><div class="bar"><div id="cFill" class="fill cfill"></div></div><strong id="cPct">0%</strong></div>
+    </div>
+    <div class="privacy">Only your name, final recommendation percentage and feedback will be saved. Your individual answers are not saved.</div>
+    <div id="saveStatus" class="success hidden"></div>
+  </div>
+
+  <div class="question" style="margin-top:22px">
+    <h3>One last thing...</h3>
+    <p style="color:var(--muted);margin-top:0">Don't just pick a city. Tell me what you think I should actually do.</p>
+    <textarea id="finalAdvice" placeholder="Your honest advice..."></textarea>
+  </div>
+
+  <button class="primary" onclick="submitResponse()">Submit my opinion</button>
+</div>
+</section>
+</main>
+
+<footer class="footer wrap">
+  Made because apparently choosing a city needed a whole website.
+</footer>
+
+<!-- Hidden Google Form submission target -->
+<iframe name="googleFormTarget" id="googleFormTarget" style="display:none"></iframe>
+
+<script>
+/*
+  ============================================================
+  GOOGLE FORM CONFIGURATION
+  ============================================================
+  Your Google Form:
+  https://docs.google.com/forms/d/e/1FAIpQLSdiT4xWpcMZdRrqjmYZzA7yTaHbrMjnEpAW2wCU15CHnoed0A/viewform
+
+  Your form has:
+    1. Name
+    2. Recommendation
+    3. Feedback
+
+  IMPORTANT:
+  Replace the three "entry.xxxxx" values below with the actual
+  entry IDs from your Google Form. Instructions are in README.md.
+*/
+const GOOGLE_FORM = {
+  action: "https://docs.google.com/forms/d/e/1FAIpQLSdiT4xWpcMZdRrqjmYZzA7yTaHbrMjnEpAW2wCU15CHnoed0A/formResponse",
+  name: "entry.1552210905",
+  recommendation: "entry.1458683993",
+  feedback: "entry.835377091"
+};
+
+/*
+  Names allowed to see the two hidden Gurgaon points.
+  Replace the placeholder with the real name(s).
+*/
+const UNLOCKED_NAMES = [
+  "YOUR_NAME_HERE"
+];
+
+const state = {
+  name:"",
+  unlocked:false,
+  scales:{},
+  priority:"",
+  ranks:["Family","Career growth","Personal development","Peace of mind","Social life","Independence","Living conditions"],
+  vote:"",
+  recommendation:"",
+  feedback:""
+};
+
+function start(){
+  const name=document.getElementById("name").value.trim();
+  if(!name){showToast("Please enter your name.");return;}
+  state.name=name;
+  state.unlocked=UNLOCKED_NAMES.some(n=>n.toLowerCase()===name.toLowerCase());
+
+  document.getElementById("main").classList.remove("hidden");
+  document.getElementById("hello").textContent=
+    `Okay ${name}, let's see what you think. There are no right answers — I genuinely want your opinion.`;
+
+  document.getElementById("lockedPersonal").classList.toggle("hidden",state.unlocked);
+  document.getElementById("unlockedPersonal").classList.toggle("hidden",!state.unlocked);
+
+  document.getElementById("unlockMsg").textContent=state.unlocked
+    ?"You got access to the extra points because you're special."
+    :"";
+
+  renderRanks();
+  document.getElementById("main").scrollIntoView({behavior:"smooth"});
+}
+
+document.querySelectorAll(".scale").forEach(group=>{
+  group.querySelectorAll("button").forEach((btn,index)=>{
+    btn.addEventListener("click",()=>{
+      group.querySelectorAll("button").forEach(b=>b.classList.remove("selected"));
+      btn.classList.add("selected");
+      state.scales[group.dataset.key]=index+1;
+    });
+  });
+});
+
+document.querySelectorAll("#priority .choice").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    document.querySelectorAll("#priority .choice").forEach(b=>b.classList.remove("selected"));
+    btn.classList.add("selected");
+    state.priority=btn.textContent.trim();
+  });
+});
+
+document.querySelectorAll(".vote").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    document.querySelectorAll(".vote").forEach(b=>b.classList.remove("selected"));
+    btn.classList.add("selected");
+    state.vote=btn.dataset.vote;
+  });
+});
+
+function renderRanks(){
+  const list=document.getElementById("rankList");
+  list.innerHTML="";
+  state.ranks.forEach((item,i)=>{
+    const row=document.createElement("div");
+    row.className="rank-item";
+    row.innerHTML=`
+      <span style="display:flex;align-items:center;gap:10px">
+        <span class="rank-num">${i+1}</span><strong>${item}</strong>
+      </span>
+      <span>
+        <button onclick="moveRank(${i},-1)">↑</button>
+        <button onclick="moveRank(${i},1)">↓</button>
+      </span>`;
+    list.appendChild(row);
+  });
+}
+function moveRank(i,d){
+  const j=i+d;
+  if(j<0||j>=state.ranks.length)return;
+  [state.ranks[i],state.ranks[j]]=[state.ranks[j],state.ranks[i]];
+  renderRanks();
+}
+
+/*
+  ============================================================
+  RECOMMENDATION CALCULATION
+  ============================================================
+  This is intentionally a simple decision score, not a
+  scientific/psychological test.
+
+  Family -> Gurgaon
+  Growth -> Chennai
+  Peace -> slight Gurgaon weight
+  Priority -> adds weight
+  Final city vote -> small additional weight
+
+  The two scores are normalized to total 100%.
+*/
+function calculate(){
+  const family=state.scales.family||3;
+  const growth=state.scales.growth||3;
+  const peace=state.scales.peace||3;
+
+  let g=50,c=50;
+
+  g+=(family-3)*8;
+  c+=(growth-3)*8;
+  g+=(peace-3)*4;
+
+  if(state.priority==="Family & comfort")g+=8;
+  if(state.priority==="Personal growth"||state.priority==="Career")c+=8;
+  if(state.priority==="Social life")g+=5;
+  if(state.priority==="Peace of mind"){g+=3;c+=3;}
+
+  if(state.vote==="Gurgaon")g+=6;
+  if(state.vote==="Chennai")c+=6;
+
+  g=Math.max(10,Math.min(90,g));
+  c=Math.max(10,Math.min(90,c));
+
+  const total=g+c;
+  g=Math.round(g/total*100);
+  c=100-g;
+
+  state.recommendation=`Gurgaon ${g}% / Chennai ${c}%`;
+
+  let title,text;
+  if(g>=70){
+    title="Gurgaon seems like the better choice";
+    text="Your answers strongly lean toward Gurgaon. Family support, comfort, familiarity and having people around you seem to outweigh the benefits Chennai offers in terms of independence and personal development.";
+  }else if(g>=55){
+    title="Slight lean toward Gurgaon";
+    text="You seem to have a slight preference for Gurgaon, mainly because of family, support and overall quality of life. But Chennai still has some strong advantages for your personal and professional growth.";
+  }else if(c>=70){
+    title="Chennai seems like the better choice";
+    text="Your answers strongly favor Chennai. Personal development, career growth, independence and your current team environment appear to matter more to you than the comfort and familiarity Gurgaon provides.";
+  }else if(c>=55){
+    title="Slight lean toward Chennai";
+    text="You seem to value personal growth, independence and your current work environment slightly more. Gurgaon has some major advantages, especially family and comfort, so this isn't an easy call.";
+  }else{
+    title="This is genuinely close";
+    text="You're almost perfectly split. Both cities solve some problems while creating others. This might be one of those decisions where you need to decide which set of disadvantages you're more willing to live with.";
+  }
+
+  document.getElementById("resultTitle").textContent=title;
+  document.getElementById("resultText").textContent=text;
+  document.getElementById("gPct").textContent=g+"%";
+  document.getElementById("cPct").textContent=c+"%";
+  document.getElementById("result").classList.remove("hidden");
+
+  setTimeout(()=>{
+    document.getElementById("gFill").style.width=g+"%";
+    document.getElementById("cFill").style.width=c+"%";
+  },40);
+
+  document.getElementById("result").scrollIntoView({behavior:"smooth",block:"center"});
+}
+
+function submitResponse(){
+  if(!state.name){showToast("Please enter your name first.");return;}
+  if(!state.recommendation){
+    calculate();
+    setTimeout(submitResponse,500);
+    return;
+  }
+
+  const feedback=(document.getElementById("finalAdvice").value.trim() ||
+                  document.getElementById("advice").value.trim());
+
+  if(!feedback){
+    showToast("Please leave me some feedback first.");
+    document.getElementById("finalAdvice").focus();
+    return;
+  }
+
+  state.feedback=feedback;
+
+  /*
+    Native HTML form submission to Google Forms.
+    No backend is required.
+  */
+  const form=document.createElement("form");
+  form.method="POST";
+  form.action=GOOGLE_FORM.action;
+  form.target="googleFormTarget";
+  form.style.display="none";
+
+  addHidden(form,GOOGLE_FORM.name,state.name);
+  addHidden(form,GOOGLE_FORM.recommendation,state.recommendation);
+  addHidden(form,GOOGLE_FORM.feedback,state.feedback);
+
+  document.body.appendChild(form);
+  form.submit();
+  form.remove();
+
+  const status=document.getElementById("saveStatus");
+  status.classList.remove("hidden");
+  status.textContent=
+    "✓ Response submitted successfully. Your name, recommendation and feedback were sent to Google Forms.";
+  showToast("Response submitted successfully.");
+}
+
+function addHidden(form,name,value){
+  const input=document.createElement("input");
+  input.type="hidden";
+  input.name=name;
+  input.value=value;
+  form.appendChild(input);
+}
+
+function showToast(message){
+  const t=document.createElement("div");
+  t.className="toast";
+  t.textContent=message;
+  document.body.appendChild(t);
+  requestAnimationFrame(()=>t.classList.add("show"));
+  setTimeout(()=>{t.classList.remove("show");setTimeout(()=>t.remove(),300)},2200);
+}
+</script>
+</body>
+</html>
